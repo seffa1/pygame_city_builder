@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame.image
+import random
 
 from .settings import TILE_SIZE
 
@@ -37,14 +38,25 @@ class World:
         # Create a list of (x, y) coordinates for the isometric polygon from the rect above
         iso_poly = [self.cart_to_iso(x, y) for x, y in rect]
 
+        # This creates the coords for the tile image's top left corner
         minx = min([x for x, y in iso_poly])
         miny = min([y for x, y in iso_poly])
+
+        # Randomly choose a tile type (image)
+        r = random.randint(1, 100)
+        if r<= 5:
+            tile = 'tree'
+        elif r<= 10:
+            tile = 'rock'
+        else:
+            tile = ''
 
         out = {
             'grid': [grid_x, grid_y],
             'cart_rect': rect,
             'iso_poly': iso_poly,
-            'render_pos': [minx, miny]
+            'render_pos': [minx, miny],
+            'tile': tile
         }
 
         return out
