@@ -1,16 +1,31 @@
-# This is a sample Python script.
+import pygame as pg
+from game.game import Game
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main() -> None:
+    # Differentiates between being at the loading menu (running) and the game running (playing)
+    running = True
+    playing = True
 
+    # Initialize pygame
+    pg.init()
+    pg.mixer.init()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    screen = pg.display.set_mode((0,0), pg.FULLSCREEN)
+    clock = pg.time.Clock()
 
+    # implement menus
 
-# Press the green button in the gutter to run the script.
+    # implement game
+    game = Game(screen, clock)
+
+    while running:
+        # start menu here
+
+        while playing:
+            # game loop here
+            game.run()
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
