@@ -4,8 +4,8 @@ import sys
 from .world import World
 from .settings import TILE_SIZE
 
-#KLEFT OFF AT PART 1: 17:22
-#MAke  SURE TO PUSH CHANGES
+# LEFT OFF AT PART 2: 5:07
+# MAKE  SURE TO PUSH CHANGES!!!!!
 
 class Game:
     def __init__(self, screen, clock):
@@ -42,6 +42,13 @@ class Game:
                 sq = self.world.world[x][y]['cart_rect']
                 rect = pg.Rect(sq[0][0], sq[0][1], TILE_SIZE, TILE_SIZE)
                 pg.draw.rect(self.screen, (0, 0, 255), rect, 1)
+
+
+
+                # Extracts polygon coords from world and offsets them to the middle of the screen and draws them
+                poly = self.world.world[x][y]['iso_poly']
+                poly = [(x + self.width/2, y + self.height/4) for x, y in poly]
+                pg.draw.polygon(self.screen, (255, 0, 0), poly, 1)
 
 
         pg.display.flip()

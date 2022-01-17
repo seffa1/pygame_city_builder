@@ -1,4 +1,6 @@
 import pygame as pg
+import pygame.image
+
 from .settings import TILE_SIZE
 
 class World:
@@ -8,6 +10,7 @@ class World:
         self.width = width
         self.height = height
         self.world = self.create_world()
+        self.tiles = self.load_images()
 
     def create_world(self):
         """Returns a 2D array of dictionaries representing each of the world's tiles.
@@ -31,9 +34,31 @@ class World:
             (grid_x * TILE_SIZE, grid_y * TILE_SIZE + TILE_SIZE)
         ]
 
+        # Create a list of (x, y) coordinates for the isometric polygon from the rect above
+        iso_poly = [self.cart_to_iso(x, y) for x, y in rect]
+
+        minx = min([x for x, y in iso_poly])
+        miny = min([y for x, y in iso_poly])
+
         out = {
             'grid': [grid_x, grid_y],
-            'cart_rect': rect
+            'cart_rect': rect,
+            'iso_poly': iso_poly,
+            'render_pos': [minx, miny]
         }
 
         return out
+
+    def cart_to_iso(self, x, y):
+        iso_x = x - y
+        iso_y = (x + y) / 2
+        return iso_x, iso_y
+
+    def load_images(self):
+        block = pygame.image.load('assets/graphics/block.png').convert_alpha()
+        tree = pygame.image.load('assets/graphics/tree.png').convert_alpha()
+        rock = pygame.image.load('assets/graphics/rock.png').convert_alpha()
+
+        return {'block': block,
+                'tree': tree,
+                'rock': rock}
