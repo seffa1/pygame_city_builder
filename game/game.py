@@ -4,7 +4,7 @@ import sys
 from .world import World
 from .settings import TILE_SIZE
 
-# LEFT OFF AT PART 2: 11:40
+# LEFT OFF AT PART 3
 # MAKE  SURE TO PUSH CHANGES!!!!!
 
 class Game:
@@ -37,30 +37,34 @@ class Game:
 
     def draw(self):
         self.screen.fill((0, 0, 0))
+        self.screen.blit(self.world.grass_tiles, (0, 0))
+
         for x in range(self.world.grid_lenth_x):
             for y in range(self.world.grid_lenth_y):
-                sq = self.world.world[x][y]['cart_rect']
-                rect = pg.Rect(sq[0][0], sq[0][1], TILE_SIZE, TILE_SIZE)
-                pg.draw.rect(self.screen, (0, 0, 255), rect, 1)
+                # This draws the original cartesion grid
+                # sq = self.world.world[x][y]['cart_rect']
+                # rect = pg.Rect(sq[0][0], sq[0][1], TILE_SIZE, TILE_SIZE)
+                # pg.draw.rect(self.screen, (0, 0, 255), rect, 1)
 
                 # Gets the minx, miny for each polygon. This is the top left corner of the square around the polygon
                 render_pos = self.world.world[x][y]['render_pos']
 
-                # Draws the block image at the render position, with the needed offset
-                self.screen.blit(self.world.tiles['block'], (render_pos[0] + self.width/2, render_pos[1] + self.height/4))
+                # We are no longer drawing each grass block iteratively, instead we draw a surface shown before this nested loop
+                # self.screen.blit(self.world.tiles['block'], (render_pos[0] + self.width/2, render_pos[1] + self.height/4))
 
-                # Gets the tile (image) for the current tile and draws that image if its not blank over the block
+                # Gets the rock or tree image for the current tile and draws that image if its not blank over the block
                 tile = self.world.world[x][y]['tile']
                 if tile != '':
-                    # Offsets the images to draw the objects on top of the screen
+                    # Offsets the rock or tree image to draw the objects on top of the screen
                     self.screen.blit(self.world.tiles[tile],
                                     (render_pos[0] + self.width/2,
                                      render_pos[1] + self.height/4 - (self.world.tiles[tile].get_height() - TILE_SIZE)))
 
                 # Extracts polygon coords from world and offsets them to the middle of the screen and draws them
-                poly = self.world.world[x][y]['iso_poly']
-                poly = [(x + self.width/2, y + self.height/4) for x, y in poly]
-                pg.draw.polygon(self.screen, (255, 0, 0), poly, 1)
+                # Drawing an outline of the iso grid, no longer needed
+                # poly = self.world.world[x][y]['iso_poly']
+                # poly = [(x + self.width/2, y + self.height/4) for x, y in poly]
+                # pg.draw.polygon(self.screen, (255, 0, 0), poly, 1)
 
 
         pg.display.flip()
