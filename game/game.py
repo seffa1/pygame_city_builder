@@ -5,8 +5,9 @@ from .world import World
 from .settings import TILE_SIZE
 from .utils import draw_text
 from .camera import Camera
+from .hud import Hud
 
-# LEFT OFF AT PART 3: 16:14
+# LEFT OFF AT PART 5
 # MAKE  SURE TO PUSH CHANGES!!!!!
 
 class Game:
@@ -14,8 +15,9 @@ class Game:
         self.screen = screen
         self.clock = clock
         self.width, self.height = self.screen.get_size()
-        self.world = World(50, 50, self.width, self.height)
+        self.world = World(100, 100, self.width, self.height)
         self.camera = Camera(self.width, self.height)
+        self.hud = Hud(self.width, self.height)
 
     def run(self):
         self.playing = True
@@ -37,6 +39,7 @@ class Game:
 
     def update(self):
         self.camera.update()
+        self.hud.update()
 
     def draw(self):
         self.screen.fill((0, 0, 0))
@@ -71,6 +74,8 @@ class Game:
                 # poly = self.world.world[x][y]['iso_poly']
                 # poly = [(x + self.width/2, y + self.height/4) for x, y in poly]
                 # pg.draw.polygon(self.screen, (255, 0, 0), poly, 1)
+
+        self.hud.draw(self.screen)
 
         draw_text(
             self.screen,
