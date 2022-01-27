@@ -7,7 +7,7 @@ from .utils import draw_text
 from .camera import Camera
 from .hud import Hud
 
-# LEFT OFF AT PART 6
+# LEFT OFF AT PART 7
 # MAKE  SURE TO PUSH CHANGES!!!!!
 
 class Game:
